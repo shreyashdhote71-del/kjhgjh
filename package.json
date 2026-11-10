@@ -1,0 +1,18 @@
+{
+  "name": "onera-school-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ONERA school platform Node.js backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "backup": "node backup.js"
+  },
+  "engines": {
+    "node": ">=20.12"
+  },
+  "dependencies": {
+    "nodemailer": "^10.3.1",
+    "pg": "^8.23.1"
+  }
+}

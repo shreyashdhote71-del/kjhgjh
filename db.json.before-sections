@@ -1,0 +1,163 @@
+{
+ "u": [
+  {
+   "id": "cb655af951",
+   "role": "admin",
+   "name": "Super Admin",
+   "username": "admin",
+   "salt": "0a1213aba9",
+   "h": "c2e6b658346bb235d9edcfdef7059c40a40d1e7dfd16dc7ed08b7c52e89387b1"
+  },
+  {
+   "id": "a4c211d317",
+   "role": "school",
+   "name": "Mount Carmel  (Admin)",
+   "username": "Mount",
+   "schoolId": "f9e8f2d75a",
+   "salt": "39868dceb4",
+   "h": "9134ecc29e74789fce808782c428560066e148b087f5b8d605ca4d77316e09e5"
+  },
+  {
+   "id": "1c9fc778a3",
+   "role": "school",
+   "name": "TIPS (Admin)",
+   "username": "TIPS_1",
+   "schoolId": "37a5585187",
+   "salt": "03e9143c5a",
+   "h": "481fe836f34e2a3f538b8810d6941a8b598a25760e0295b4e33fc03f63c273f4"
+  },
+  {
+   "id": "e247f83846",
+   "role": "teacher",
+   "name": "RAJESH DHOTE",
+   "username": "RAJESH_DHOTE",
+   "schoolId": "37a5585187",
+   "cls": null,
+   "salt": "4a61876bd0",
+   "h": "9774391503a4a3b1cc60c776fa0aa5f225e28a0b32b47ea399716e820faf3e08",
+   "classes": []
+  },
+  {
+   "id": "1d4d01f77c",
+   "role": "student",
+   "name": "HERAMB DHOTE",
+   "username": "HERAMB_DHOTE123",
+   "schoolId": "37a5585187",
+   "cls": 1,
+   "salt": "2f55f5a905",
+   "h": "bcc375dfe97479c905963d6ae20a38fdd6abceca1ec34f6a8b3426d278f63256"
+  },
+  {
+   "id": "60ef47e432",
+   "role": "student",
+   "name": "pranay hedaoo",
+   "username": "pranay_hedaoo",
+   "schoolId": "37a5585187",
+   "cls": 8,
+   "salt": "5dbca2ce24",
+   "h": "a9273611de6608b632e8a830ec479b7d3bde92c1f7d6f423aefcbc4f03c6b0a1"
+  },
+  {
+   "id": "7634049951",
+   "role": "teacher",
+   "name": "ankush hedaoo",
+   "username": "ankush_hedaoo",
+   "schoolId": "37a5585187",
+   "cls": null,
+   "classes": [
+    7,
+    8
+   ],
+   "salt": "0f0cc2ce34",
+   "h": "85e7629c7ffdd815acf13e2e763b277ccff73fe37fc80573bbf696321286b7a0"
+  }
+ ],
+ "s": [
+  {
+   "id": "f9e8f2d75a",
+   "name": "Mount Carmel ",
+   "type": "School",
+   "city": "Nagpur",
+   "by": "Super Admin"
+  },
+  {
+   "id": "37a5585187",
+   "name": "TIPS",
+   "type": "School",
+   "city": "KATOL",
+   "by": "Super Admin",
+   "at": 1793514815039
+  }
+ ],
+ "n": [
+  {
+   "id": "4b22b846af",
+   "schoolId": "37a5585187",
+   "cls": 1,
+   "title": "thermodynamics",
+   "content": "paper",
+   "by": "RAJESH DHOTE",
+   "at": 1793541732405
+  }
+ ],
+ "r": [
+  {
+   "id": "e7c4d8b744",
+   "schoolId": "37a5585187",
+   "studentId": "1d4d01f77c",
+   "exam": "TERM 1",
+   "subject": "MATHS ",
+   "marks": 87,
+   "total": 100
+  }
+ ],
+ "d": [],
+ "f": [
+  {
+   "id": "e15c6cbcf5",
+   "schoolId": "37a5585187",
+   "title": "TERM 1",
+   "amount": 500,
+   "dueDate": "2026-12-06"
+  }
+ ],
+ "p": [
+  {
+   "s": "1d4d01f77c",
+   "f": "e15c6cbcf5",
+   "at": 1793515588388
+  }
+ ],
+ "a": [
+  {
+   "id": "a40162c90c",
+   "schoolId": "37a5585187",
+   "studentId": "1d4d01f77c",
+   "month": "2026-10",
+   "days": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    9,
+    10,
+    12,
+    13,
+    14,
+    15,
+    19,
+    20,
+    21,
+    22,
+    23,
+    26,
+    27,
+    28,
+    29
+   ]
+  }
+ ],
+ "b": []
+}

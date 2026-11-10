@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONERA | School Login</title>
+<script>
+/* same theme as the main page, set before paint */
+document.documentElement.dataset.theme = JSON.parse(localStorage.settings || '{}').theme || 'light';
+/* already logged in: go straight to the dashboard */
+if (localStorage.t) {
+  const to = new URLSearchParams(location.search).get('to');
+  if (to) sessionStorage.open = to;
+  location.replace('/');
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --ink: #111a33;
+  --mute: #667089;
+  --line: #e9e8f2;
+  --card: #ffffff;
+  --field: #f3f5fb;
+  --blue: #2f6bff;
+  --blue-dark: #1b4fd8;
+  --link: #1b4fd8;
+  --red: #cf2f2f;
+  --bg: #f7f5fc;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e8ebf6;
+  --mute: #9aa3bd;
+  --line: #2a3250;
+  --card: #161c31;
+  --field: #232b48;
+  --link: #9db8ff;
+  --red: #ff8080;
+  --bg: #0e1324;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 Manrope, system-ui, sans-serif;
+}
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: 0 20px 60px rgba(17, 26, 51, .12);
+}
+.logo { display: block; width: 110px; margin: 0 auto 18px; border-radius: 14px; }
+h1 { margin: 0 0 4px; font-size: 24px; text-align: center; }
+.sub { margin: 0 0 24px; color: var(--mute); text-align: center; font-size: 14px; }
+label { display: block; font-weight: 700; margin: 0 0 16px; }
+.field { position: relative; margin-top: 8px; }
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+  color: var(--ink);
+  font: inherit;
+}
+input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+.eye {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  border: 0; background: none; color: var(--mute); cursor: pointer; padding: 8px; font: inherit; font-size: 13px; font-weight: 700;
+}
+#pw { padding-right: 64px; }
+.go {
+  width: 100%; margin-top: 8px; padding: 14px; border: 0; border-radius: 999px;
+  background: var(--blue); color: #fff; font: inherit; font-weight: 800; font-size: 17px; cursor: pointer;
+}
+.go:hover { background: var(--blue-dark); }
+.go:disabled { opacity: .6; cursor: wait; }
+.err { min-height: 22px; margin: 12px 0 0; color: var(--red); font-weight: 700; text-align: center; font-size: 14px; }
+.links { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 16px; font-size: 14px; }
+.links a { color: var(--link); font-weight: 700; text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+.hint { margin: 20px 0 0; color: var(--mute); font-size: 13px; text-align: center; }
+</style>
+</head>
+<body>
+<main class="card">
+  <img class="logo" src="/logo.png" alt="ONERA">
+  <h1>School &amp; College Login</h1>
+  <p class="sub">School admin, teachers and students login here</p>
+
+  <form id="f" autocomplete="on">
+    <label>Username
+      <div class="field"><input name="username" autocomplete="username" required></div>
+    </label>
+    <label>Password
+      <div class="field">
+        <input id="pw" name="password" type="password" autocomplete="current-password" required>
+        <button type="button" class="eye" id="eye" aria-label="Show password">Show</button>
+      </div>
+    </label>
+    <button class="go" id="go">Login</button>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+
+  <div class="links">
+    <a href="/">Forgot username or password?</a>
+    <a href="/">Back to home</a>
+  </div>
+  <p class="hint">ONERA main admin? Use the admin login on the <a href="/">home page</a>.</p>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+
+$('#eye').onclick = () => {
+  const show = $('#pw').type === 'password';
+  $('#pw').type = show ? 'text' : 'password';
+  $('#eye').textContent = show ? 'Hide' : 'Show';
+};
+
+/* portal 'school': the server finds the school from the username, so no school has to be picked first */
+$('#f').onsubmit = async e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  $('#err').textContent = '';
+  $('#go').disabled = true;
+  try {
+    const r = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: d.username.trim(), password: d.password, portal: 'school' })
+    });
+    const j = await r.json();
+    if (!r.ok) throw j.error || 'Login failed';
+    /* the same keys the main page reads, so it opens this user's dashboard */
+    localStorage.t = j.token;
+    localStorage.u = JSON.stringify(j.user);
+    const to = new URLSearchParams(location.search).get('to');
+    if (to) sessionStorage.open = to;
+    location.href = '/';
+  } catch (x) {
+    $('#err').textContent = typeof x === 'string' ? x : 'Could not reach the server. Please try again.';
+    $('#go').disabled = false;
+  }
+};
+</script>
+</body>
+</html>
